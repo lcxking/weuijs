@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>WeUI</title>
+    <link rel="stylesheet" href="../style/weui.css"/>
+    <link rel="stylesheet" href="./example.css"/>
+</head>
+<body ontouchstart>
+<div class="page">
+    <div class="hd">
+        <h1 class="page_title">Dialog</h1>
+    </div>
+    <div class="bd spacing">
+    输入：<input type="text" id="text">    
+        <a href="javascript:;" class="weui_btn weui_btn_primary" id="showDialog1">提交</a>
+        <a href="javascript:;" class="weui_btn weui_btn_default" id="showDialog2">打开百度</a>
+    
+
+      <a href="javascript:;" class="weui_btn weui_btn_primary" id="toast1">toast</a>
+     <a href="javascript:;" class="weui_btn weui_btn_default" id="toast2">toast loading</a>
+</div>
+</div>
+<script src="../js/zepto.min.js"></script>
+<script src="../js/weui.js"></script>
+<script type="text/javascript">
+    $('#showDialog2').on('click',function(){
+        weui.dialog.confirm('确认要去百度吗？',function(){
+            location.href='http://www.baidu.com/';
+        },'');
+    });
+    $('#showDialog1').on('click',function(){
+        if($('#text').val()==''){
+           weui.dialog.alert('请输入内容！',function(){
+                $('#text').focus();
+           }); 
+        }
+    });
+    $('#toast1').on('click',function(){
+        weui.toast.show();
+    });
+     $('#toast2').on('click',function(){
+        weui.toast.loading(toastTest);
+    });
+    function toastTest(){
+        $.get('1.html',function(data){
+            console.log(data);
+            weui.toast.loaded();
+        });
+    }
+</script>
+</body>
+</html>
