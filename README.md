@@ -11,10 +11,16 @@ weui.dialog.alert('警告内容',function(){
 weui.dialog.confirm(content,callback,title)
 
 2、toast
-weui.toast.show()
+weui.toast.init()
 weui.toast.loading(function(){
 	//ajax 加载内容
 
 	完成后请　weui.toast.loaded();
 })
+
+weui.toast.toptips(msg)
+
+
+3、actionsheet(array())
+
 
