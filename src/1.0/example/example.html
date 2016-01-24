@@ -10,45 +10,105 @@
 <body ontouchstart>
 <div class="page">
     <div class="hd">
-        <h1 class="page_title">Dialog</h1>
+        <h1 class="page_title">Example</h1>
     </div>
     <div class="bd spacing">
-    输入：<input type="text" id="text">    
-        <a href="javascript:;" class="weui_btn weui_btn_primary" id="showDialog1">提交</a>
-        <a href="javascript:;" class="weui_btn weui_btn_default" id="showDialog2">打开百度</a>
+        <div class="weui_cells_title">表单</div>
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">手机号</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" id="test_text" type="tel" placeholder="请输入手机号"/>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" id="test_text_2" type="text" placeholder="请输入姓名"/>
+                </div>
+            </div>
+            <div class="weui_cell weui_cell_switch">
+                <div class="weui_cell_hd weui_cell_primary">已婚</div>
+                <div class="weui_cell_ft">
+                    <input class="weui_switch" type="checkbox"/>
+                </div>
+            </div>
+        </div>
+    <br/>
+        <a href="javascript:;" class="weui_btn weui_btn_primary" id="showDialog1">dialog alert</a>
+        <a href="javascript:;" class="weui_btn weui_btn_default" id="showDialog2">dialog confirm</a>
+        
+        <a href="javascript:;" class="weui_btn weui_btn_warn" id="toptips1">toast toptips</a>
+
+
+      <a href="javascript:;" class="weui_btn weui_btn_default" id="toast1">toast init</a>
+     <a href="javascript:;" class="weui_btn weui_btn_primary" id="toast2">toast loading</a>
+
+     <a href="javascript:;" class="weui_btn weui_btn_default" id="actionsheet">actionSheet</a>
+     <a href="javascript:;" class="weui_btn weui_btn_default" id="actionsheet2">菜单</a>
     
 
-      <a href="javascript:;" class="weui_btn weui_btn_primary" id="toast1">toast</a>
-     <a href="javascript:;" class="weui_btn weui_btn_default" id="toast2">toast loading</a>
+        
 </div>
 </div>
 <script src="../js/zepto.min.js"></script>
 <script src="../js/weui.js"></script>
 <script type="text/javascript">
     $('#showDialog2').on('click',function(){
-        weui.dialog.confirm('确认要去百度吗？',function(){
+        weui.dialog.confirm('确认要提交到百度吗？',function(){
             location.href='http://www.baidu.com/';
         },'');
     });
     $('#showDialog1').on('click',function(){
-        if($('#text').val()==''){
+        if($('#test_text').val()==''){
            weui.dialog.alert('请输入内容！',function(){
-                $('#text').focus();
+                $('#test_text').focus();
+                return false;
            }); 
         }
     });
-    $('#toast1').on('click',function(){
-        weui.toast.show();
+
+    $('#toptips1').on('click',function(){
+        if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test($('#test_text').val())){
+            weui.toast.toptips('手机格式不下确！');
+            $('#test_text').focus();
+            return false;
+        }
+        if(! $('#test_text_2').val()){
+            weui.toast.toptips('姓名不能为空！');
+            $('#test_text_2').focus();
+            return false;
+        }
     });
-     $('#toast2').on('click',function(){
+    
+
+    $('#toast1').on('click',function(){
+        weui.toast.init();
+    });
+    $('#toast2').on('click',function(){
         weui.toast.loading(toastTest);
     });
     function toastTest(){
         $.get('1.html',function(data){
-            console.log(data);
-            weui.toast.loaded();
+            timout = Math.ceil(Math.random()*3000);
+            console.log(timout+'|'+data);
+            setTimeout(function(){
+                weui.toast.loaded();
+            },timout);
         });
     }
+
+    $('#actionsheet').on('click',function(){
+        weui.actionsheet.init(['<a rel="1">cell1</a>','<a rel="2">cell2</a>']);
+        $('.weui_actionsheet_menu .weui_actionsheet_cell').on('click',function(){
+            $('#test_text').val($(this).find('a').attr('rel'));
+            weui.actionsheet.cancle();
+        });
+    });
+    $('#actionsheet2').on('click',function(){
+        weui.actionsheet.init(['<a href="javascript:void(0)">菜单１</a>','<a href="http://www.baiduc.om" target="_blank">菜单2</a>','....']);
+    });
+
 </script>
 </body>
 </html>
