@@ -138,6 +138,14 @@ var weui = {
                 mask.hide();
             });
 		}
-	}
+	},
+	file : {
+		change : function(obj){
 
+		},
+		upload : function(obj){
+			
+		}
+	}
+	
 };
